@@ -3,6 +3,7 @@ package com.example.sweater.controller;
 import com.example.sweater.domain.Role;
 import com.example.sweater.domain.User;
 import com.example.sweater.repos.UserRepo;
+import com.example.sweater.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,12 @@ import java.util.stream.Collectors;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired
-    private UserRepo userRepo;
+    private UserService userService;
 
     @GetMapping
     public String userList(Model model)
     {
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.findAllUser());
         return "userList";
     }
 
@@ -55,8 +56,7 @@ public class UserController {
                 user.getRoles().add(Role.valueOf(key));
             }
         }
-
-        userRepo.save(user);
+        userService.saveUser(user);
         return "redirect:/user";
     }
 }
