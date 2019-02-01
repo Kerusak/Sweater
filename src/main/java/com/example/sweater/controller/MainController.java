@@ -2,7 +2,7 @@ package com.example.sweater.controller;
 
 import com.example.sweater.domain.Message;
 import com.example.sweater.domain.User;
-import com.example.sweater.repos.MessageRepo;
+import com.example.sweater.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import java.util.Map;
 @Controller
 public class MainController {
     @Autowired
-    private MessageRepo messageRepo;
+    private MessageService messageService;
 
     @GetMapping("/")
     public String greeting(Map<String, Object> model)
@@ -27,14 +27,14 @@ public class MainController {
     @GetMapping("/main")
     public String main(@RequestParam(required = false) String filter, Model model)
     {
-        Iterable<Message> messages = messageRepo.findAll();
+        Iterable<Message> messages = messageService.findAllMessage();
         if(filter != null && !filter.isEmpty())
         {
-            messages = messageRepo.findByTag(filter);
+            messages = messageService.findByTag(filter);
         }
         else
         {
-            messages = messageRepo.findAll();
+            messages = messageService.findAllMessage();
         }
         model.addAttribute("messages",messages);
         model.addAttribute("filter", filter);
@@ -48,8 +48,8 @@ public class MainController {
             @RequestParam String tag, Model model)
     {
         Message message = new Message(text, tag, user);
-        messageRepo.save(message);
-        Iterable<Message> messages = messageRepo.findAll();
+        messageService.addMessage(message);
+        Iterable<Message> messages = messageService.findAllMessage();
         model.addAttribute("messages",messages);
         return "main";
     }
