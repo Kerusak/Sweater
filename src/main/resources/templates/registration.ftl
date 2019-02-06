@@ -4,5 +4,5 @@
 <@c.page>
 <h2>Add new user</h2>
 ${message!}
-<@l.login "/registration"/>
+<@l.login "/registration" true/>
 </@c.page>
