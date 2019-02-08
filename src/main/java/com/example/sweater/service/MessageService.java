@@ -16,7 +16,7 @@ public class MessageService {
         return messageRepo.findAll();
     }
 
-    public void addMessage(Message message) {
+    public void save(Message message) {
         messageRepo.save(message);
     }
 
