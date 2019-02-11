@@ -1,6 +1,7 @@
 package com.example.sweater.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -8,10 +9,11 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @Entity
+@EqualsAndHashCode(of="id")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @NotBlank(message = "Please fill the message")
     @Length(max = 2048, message = "Message too long")
