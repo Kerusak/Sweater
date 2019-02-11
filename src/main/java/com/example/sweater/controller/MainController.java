@@ -72,8 +72,6 @@ public class MainController {
             model.addAttribute("message", null);
             messageService.save(message);
         }
-
-
         Iterable<Message> messages = messageService.findAllMessage();
         model.addAttribute("messages", messages);
         return "main";
@@ -101,6 +99,10 @@ public class MainController {
             @RequestParam(required = false) Message message) {
         Set<Message> messages = user.getMessages();
 
+        model.addAttribute("userChannel",user);
+        model.addAttribute("subscriptionsCount",user.getSubscriptions().size());
+        model.addAttribute("subscribersCount",user.getSubscribers().size());
+        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("messages", messages);
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
@@ -126,7 +128,6 @@ public class MainController {
             saveFile(message,file);
             messageService.save(message);
         }
-
         return "redirect:/user-messages/"+user;
     }
 }
