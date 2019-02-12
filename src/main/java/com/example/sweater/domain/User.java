@@ -2,6 +2,7 @@ package com.example.sweater.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 @EqualsAndHashCode(of="id")
+@ToString(exclude = {"messages", "subscribers", "subscriptions"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
