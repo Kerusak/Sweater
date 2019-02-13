@@ -102,11 +102,7 @@ public class MainController {
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(required = false) Message message) {
 
-        //Set<Message> messages = user.getMessages();
-
-        List<Message> mainList = new ArrayList<>();
-        mainList.addAll(user.getMessages());
-        Page<Message> page = new PageImpl<>(mainList);
+        Page<Message> page = new PageImpl(Arrays.asList(user.getMessages()));
 
         model.addAttribute("userChannel",user);
         model.addAttribute("url","/user-messages/"+user.getId());
